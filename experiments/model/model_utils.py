@@ -25,7 +25,8 @@ def default(x, d):
     return d if x is None else x
 
 
-def get_num_points(x: Pointclouds, /):
+def get_num_points(x: Pointclouds):
+# def get_num_points(x: Pointclouds, /):
     return x.points_padded().shape[1]
 
 

@@ -72,8 +72,10 @@ class ConditionalPointCloudDiffusionModel(PointCloudProjectionModel):
         noise = torch.randn_like(x_0)
 
         # Sample random timesteps for each point_cloud
-        timestep = torch.randint(0, self.scheduler.num_train_timesteps, (B,), 
+        timestep = torch.randint(0, self.scheduler.config.num_train_timesteps, (B,), 
             device=self.device, dtype=torch.long)
+        # timestep = torch.randint(0, self.scheduler.num_train_timesteps, (B,), 
+        #     device=self.device, dtype=torch.long)
 
         # Add noise to points
         x_t = self.scheduler.add_noise(x_0, noise, timestep)
@@ -87,7 +89,8 @@ class ConditionalPointCloudDiffusionModel(PointCloudProjectionModel):
         
         # Check
         if not noise_pred.shape == noise.shape:
-            raise ValueError(f'{noise_pred.shape=} and {noise.shape=}')
+            # raise ValueError(f'{noise_pred.shape=} and {noise.shape=}')
+            raise ValueError(f'{noise_pred.shape} and {noise.shape} not equal')
         
         # Loss
         loss = F.mse_loss(noise_pred, noise)

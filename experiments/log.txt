@@ -1,0 +1,19 @@
+Collecting git+https://github.com/facebookresearch/pytorch3d.git@v0.6.2
+  Cloning https://github.com/facebookresearch/pytorch3d.git (to revision v0.6.2) to /tmp/pip-req-build-k1z3ugk2
+  Resolved https://github.com/facebookresearch/pytorch3d.git to commit 2bd65027ca5c3b87b77d4f05b8eacae58d8d106f
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: fvcore in /home/palakons/env_pc2/lib/python3.8/site-packages (from pytorch3d==0.6.2) (0.1.5.post20221221)
+Requirement already satisfied: iopath in /home/palakons/env_pc2/lib/python3.8/site-packages (from pytorch3d==0.6.2) (0.1.10)
+Requirement already satisfied: numpy in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (1.24.4)
+Requirement already satisfied: yacs>=0.1.6 in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (0.1.8)
+Requirement already satisfied: pyyaml>=5.1 in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (6.0.2)
+Requirement already satisfied: tqdm in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (4.66.5)
+Requirement already satisfied: termcolor>=1.1 in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (2.4.0)
+Requirement already satisfied: Pillow in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (10.4.0)
+Requirement already satisfied: tabulate in /home/palakons/env_pc2/lib/python3.8/site-packages (from fvcore->pytorch3d==0.6.2) (0.9.0)
+Requirement already satisfied: typing_extensions in /home/palakons/env_pc2/lib/python3.8/site-packages (from iopath->pytorch3d==0.6.2) (4.12.2)
+Requirement already satisfied: portalocker in /home/palakons/env_pc2/lib/python3.8/site-packages (from iopath->pytorch3d==0.6.2) (2.10.1)
+Installing collected packages: pytorch3d
+  Running setup.py install for pytorch3d: started
+  Running setup.py install for pytorch3d: finished with status 'error'

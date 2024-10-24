@@ -48,8 +48,8 @@ class RunConfig:
 
 @dataclass
 class LoggingConfig:
-    wandb: bool = True #fix here 
-    wandb_project: str = 'pc2-astyx'
+    wandb: bool = False #fix here 
+    wandb_project: str = 'pc2'
 
 
 @dataclass
@@ -61,7 +61,6 @@ class PointCloudProjectionModelConfig:
     use_local_colors: bool = True
     use_local_features: bool = True
     use_global_features: bool = False
-    # use_mask: bool = False
     use_mask: bool = True
     use_distance_transform: bool = True
     
@@ -122,12 +121,11 @@ class PointCloudDatasetConfig(DatasetConfig):
 
 @dataclass
 class CO3DConfig(PointCloudDatasetConfig):
-    type: str = 'astyx'
-    # root: str = os.getenv('CO3DV2_DATASET_ROOT')
-    root: str = os.getenv('ASTYX_DATASET_ROOT')
+    type: str = 'co3dv2'
+    root: str = os.getenv('CO3DV2_DATASET_ROOT')
     # category: str = 'hydrant'
-    category: str = 'scene'
-    subset_name: str = '80-20' #need here work
+    category: str = 'car'
+    subset_name: str = 'set_lists'
     # ['manyview_dev_1'(1 0 0), 'manyview_test_0' (bad), 'manyview_dev_0' ( 0 1 1 ), 'fewview_dev' (error), 'fewview_test' bad, 'fewview_train' bad]
     mask_images: bool = '${model.use_mask}'
 
@@ -162,7 +160,7 @@ class AugmentationConfig:
 
 @dataclass
 class DataloaderConfig:
-    batch_size: int = 12  # 2 for debug
+    batch_size: int = 8  # 2 for debug
     num_workers: int = 6  # 0 for debug
 
 
@@ -198,8 +196,7 @@ class ExponentialMovingAverageConfig:
 class OptimizerConfig:
     type: str
     name: str
-    # lr: float = 1e-3
-    lr: float = 1e-1
+    lr: float = 1e-3
     weight_decay: float = 0.0
     scale_learning_rate_with_batch_size: bool = False
     gradient_accumulation_steps: int = 1

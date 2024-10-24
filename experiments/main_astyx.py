@@ -33,11 +33,6 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 @hydra.main(config_path='config', config_name='config', version_base='1.1')
 def main(cfg: ProjectConfig):
 
-    print("lr",cfg.optimizer.lr)
-    print("batch_size",cfg.dataloader.batch_size)
-    print("resume",cfg.checkpoint.resume)
-
-
     # Accelerator
     accelerator = Accelerator(mixed_precision=cfg.run.mixed_precision, cpu=cfg.run.cpu, 
         gradient_accumulation_steps=cfg.optimizer.gradient_accumulation_steps)
@@ -163,19 +158,8 @@ def main(cfg: ProjectConfig):
             if (cfg.run.limit_train_batches is not None) and (i >= cfg.run.limit_train_batches): break
             model.train()
 
-            #print batch size
-            # print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability), end=', ')
-            if len(batch.sequence_point_cloud)!= len(batch.camera) or len(batch.sequence_point_cloud)!=len(batch.image_rgb) or len(batch.sequence_point_cloud)!=len(batch.fg_probability) :
-                print("batch size not equal, -----------------")
-                print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability))
-                continue
-
             # Gradient accumulation
             with accelerator.accumulate(model):
-                # if i == 0:
-                #     print()
-                #     print("lens")
-                #     print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability))
 
                 # Forward
                 loss = model(batch, mode='train')

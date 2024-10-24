@@ -271,12 +271,13 @@ class NormalizeInverse(torchvision.transforms.Normalize):
 
 
 def resume_from_checkpoint(cfg: ProjectConfig, model, optimizer=None, scheduler=None, model_ema=None):
+
+    print("=> loading checkpoint '{}'".format(cfg.checkpoint.resume))
     
     # Check if resuming training from a checkpoint
     if not cfg.checkpoint.resume:
         print('Starting training from scratch')
         return TrainState()
-
     # If resuming, load model state dict
     print(f'Loading checkpoint ({datetime.datetime.now()})')
     checkpoint = torch.load(cfg.checkpoint.resume, map_location='cpu')
