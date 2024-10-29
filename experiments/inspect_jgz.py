@@ -2,7 +2,7 @@ import json
 import gzip
 
 # Define the path to the gzipped JSON file
-file_path = '/data/palakons/dataset/astyx/scene/frame_annotations.jgz'
+file_path = '/data/palakons/dataset/astyx_blank/scene/sequence_annotations.jgz'
 
 # Open and read the gzipped JSON file
 with gzip.open(file_path, 'rt', encoding='utf-8') as file:

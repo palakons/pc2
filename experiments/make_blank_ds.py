@@ -1,10 +1,13 @@
 import os
 from PIL import Image
-root_dir="/data/palakons/dataset/astyx/scene_blank_cam"
+root_dir="/data/palakons/dataset/astyx_blank/scene"
 
 #go though subdirs in root_dir, except set_lists and eval_batches
 for dir in sorted(os.listdir(root_dir)):
     if dir == "set_lists" or dir == "eval_batches":
+        continue
+    #if its not a directory, skip
+    if not os.path.isdir(f"{root_dir}/{dir}"):
         continue
     print(f"Processing {root_dir}/{dir}")
     #/data/palakons/dataset/astyx/scene_blank_cam/148/depths/000148.png
