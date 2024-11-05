@@ -2,13 +2,15 @@ import wandb
 
 # Example sweep configuration
 sweep_configuration = {
-    "description": "Sweep over batch size and learning rate",
+    "description": " na",
     "method": "grid",
-    "name": "bkank-fit",
+    "name": "q1 data sizes",
     "parameters": {
-        "dataloader.batch_size": {"values": [12,8,4,2]},
+        "dataloader.batch_size": {"values": [8]},#[10,8,4]},
         "run.max_steps": {"values": [4000]},
-        "optimizer.lr": {"values": [.01,.001,.0001,.00001]},
+        "optimizer.lr": {"values": [.01]},#[.1,.01,.001]},
+        "dataset.subset_name": {"values": ["21-6","43-11","80-20"]},
+        # "model.point_cloud_model_embed_dim": {"values": [64]},
     },
     "program": "projection-conditioned-point-cloud-diffusion/experiments/main.py",
     "command": ["${env}","${interpreter}","${program}","${args_no_hyphens}"]

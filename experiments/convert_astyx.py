@@ -155,20 +155,20 @@ with open(input_file_path, 'r') as input_file:
         print(new_record)
         json_data.append(new_record)
 
-if True:
+if False:
     # Write the JSON data to a GZIP-compressed file
     with gzip.open(output_file_path, 'wt') as output_file:
         json.dump(json_data, output_file, indent=2)
 
 #workign with the sequence file
-sequence_output_file_path = '/data/palakons/dataset/astyx/scene/sequence_annotations.jgz'
+sequence_output_file_path = '/data/palakons/dataset/astyx_blank_q1/scene/sequence_annotations.jgz'
 # {'sequence_name': '79_8257_17428', 'category': 'car', 'video': {'path': 'car/79_8257_17428/video.MOV', 'length': -1.0}, 'point_cloud': {'path': 'car/79_8257_17428/pointcloud.ply', 'quality_score': -1.2702143963257189, 'n_points': 117906}, 'viewpoint_quality_score': 0.06755821394157818},
 print("sequence data")
 print(json_data[0])
 seq_data = []
 for record in json_data:
     # n_point = cout lines of txt file
-    pc_fname = f"/data/palakons/dataset/astyx/scene/{record['sequence_name']}/{int(record['sequence_name']):06}.txt"
+    pc_fname = f"/data/palakons/dataset/astyx_blank_q1/scene/{record['sequence_name']}/{int(record['sequence_name']):06}.txt"
     with open(pc_fname, 'r') as f:
         n_point = len(f.readlines())-3
         seq_data.append({
@@ -180,25 +180,28 @@ for record in json_data:
             },
             'point_cloud': {
                 'path': f"scene/{record['sequence_name']}/pointcloud.ply",
-                'quality_score': 0.0,
+                'quality_score': 1.0,
                 'n_points': n_point
             },
-            'viewpoint_quality_score': 0.0
+            'viewpoint_quality_score': 1.0
         })
 print(seq_data[0])
-if False:
+if True:
     with gzip.open(sequence_output_file_path, 'wt') as output_file:
         json.dump(seq_data, output_file, indent=2)
 
 #set lists
 
 set_list_output_file_path = '/data/palakons/dataset/astyx/scene/set_lists/set_lists_80-20.json'
+set_list_output_file_path = '/data/palakons/dataset/astyx/scene/set_lists/set_lists_210-60.json'
+# set_list_output_file_path = '/data/palakons/dataset/astyx/scene/set_lists/set_lists_8-2_small.json'
 
 # {"train_known": [
 #     ["106_12650_23736", 0, "car/106_12650_23736/images/frame000001.jpg"], ["106_12650_23736", 1, "car/106_12650_23736/images/frame000002.jpg"], ["106_12650_23736", 3, "car/106_12650_23736/images/frame000004.jpg"]] "train_unknown": []
 
-train_known_frames = json_data[:int(len(json_data)*0.8)]
-train_unknown_frames = json_data[int(len(json_data)*0.8):]
+train_known_frames = json_data[:int(len(json_data)*0.08)]
+train_unknown_frames = json_data[int(len(json_data)*0.08):int(len(json_data)*0.1)]
+print(len(train_known_frames),len(train_unknown_frames))
 set_list_data={"train_known":[],"train_unknown":[]}
 # print(train_known_frames[0]) #{'sequence_name': '0', 'frame_number': 0, 'frame_timestamp': -1.0, 'image': {'path': 'scene/0/images/000000.jpg', 'size': [2048, 618]}, 'depth': {'path': 'scene/0/depths/000000.jpg', 'scale_adjustment': 1.0, 'mask_path': ''}, 'viewpoint': {'R': [[0.015721251542359097, 0.0388038506130491, 0.9991231397751291], [-0.9983693562813132, -0.054233366081888695, 0.0178156951919443], [0.054877145205922295, -0.9977740503554758, 0.0378879601312635]], 'T': [-0.04286578070231163, -0.0019011493702534147, 0.011313703630010682], 'focal_length': [1817.98103, 1816.83987], 'principal_point': [1040.27484, 319.497539]}}
 for d in train_known_frames:
@@ -210,7 +213,6 @@ if False:
     os.system(f"mkdir -p {os.path.dirname(set_list_output_file_path)}")
     with open(set_list_output_file_path, 'w') as output_file:
         json.dump(set_list_data, output_file, indent=2)
-
 #eval batches
 print("eval batches")
 eval_batch_output_file_path = '/data/palakons/dataset/astyx/scene/eval_batches/eval_batches_80-20.json'
@@ -258,7 +260,7 @@ if False:
 
 #make an all-white grayscale mask for each image, same size as image
 new_base_dir = "/data/palakons/dataset/astyx"
-if True:
+if False:
     for record in json_data:
         # print("key",record.keys()) #ey dict_keys(['sequence_name', 'frame_number', 'frame_timestamp', 'image', 'depth', 'viewpoint'])
         # print(record) #{'sequence_name': '0', 'frame_number': 0, 'frame_timestamp': -1.0, 'image': {'path': 'scene/0/images/000000.jpg', 'size': [618, 2048]}, 'depth': {'path': 'scene/0/depths/000000.png', 'scale_adjustment': 1.0, 'mask_path': ''}, 'viewpoint': {'R': [[0.015721251542359097, 0.0388038506130491, 0.9991231397751291], [-0.9983693562813132, -0.054233366081888695, 0.0178156951919443], [0.054877145205922295, -0.9977740503554758, 0.0378879601312635]], 'T': [-0.04286578070231163, -0.0019011493702534147, 0.011313703630010682], 'focal_length': [1817.98103, 1816.83987], 'principal_point': [1040.27484, 319.497539]}}

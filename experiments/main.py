@@ -36,6 +36,7 @@ def main(cfg: ProjectConfig):
     print("lr",cfg.optimizer.lr)
     print("batch_size",cfg.dataloader.batch_size)
     print("resume",cfg.checkpoint.resume)
+    print("model",cfg.model.point_cloud_model_embed_dim)
 
 
     # Accelerator
@@ -166,8 +167,8 @@ def main(cfg: ProjectConfig):
             #print batch size
             # print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability), end=', ')
             if len(batch.sequence_point_cloud)!= len(batch.camera) or len(batch.sequence_point_cloud)!=len(batch.image_rgb) or len(batch.sequence_point_cloud)!=len(batch.fg_probability) :
-                print("batch size not equal, -----------------")
-                print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability))
+                # print("batch size not equal, -----------------")
+                # print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability))
                 continue
 
             # Gradient accumulation

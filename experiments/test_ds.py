@@ -133,27 +133,26 @@ def main(cfg: ProjectConfig):
 
     # Datasets
     dataloader_train, dataloader_val, dataloader_vis = get_dataset(cfg)
-
     #get a sample batch
-    for batch in dataloader_train:
-        print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability)) #12 12 12 12,
-        print(len(batch.sequence_point_cloud[0]),len(batch.camera[0]),len(batch.image_rgb[0]),len(batch.fg_probability[0])) #1 1 3 1
+    # for batch in dataloader_train:
+    #     print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability)) #12 12 12 12,
+    #     print(len(batch.sequence_point_cloud[0]),len(batch.camera[0]),len(batch.image_rgb[0]),len(batch.fg_probability[0])) #1 1 3 1
 
 
-        print(batch.sequence_point_cloud[0].points_packed()) 
-        # tensor([[ 7.1719e+00, -2.8419e+00,  4.0324e-01],
-        # [ 7.1804e+00, -2.8419e+00,  2.0222e-01],
-        # [ 7.2392e+00, -2.8695e+00,  4.4804e-01],
-        # ...,
-        # [ 4.7553e+01, -8.0698e+01, -1.2198e+00],
-        # [ 4.7247e+01, -8.0974e+01,  3.1959e-02],
-        # [ 4.8014e+01, -8.7090e+01,  5.4919e-01]])
-        print(batch.camera[0]) #PerspectiveCameras()
-        print(batch.image_rgb[0].shape) #torch.Size([3, 224, 224])
-        plot_annotation(batch.image_rgb[0].permute(1, 2, 0).cpu().numpy(),batch.sequence_point_cloud[0].points_packed().cpu().numpy(),output_fname="/home/palakons/projection-conditioned-point-cloud-diffusion/experiments/outputs/output.png")
-        exit()
+    #     print(batch.sequence_point_cloud[0].points_packed()) 
+    #     # tensor([[ 7.1719e+00, -2.8419e+00,  4.0324e-01],
+    #     # [ 7.1804e+00, -2.8419e+00,  2.0222e-01],
+    #     # [ 7.2392e+00, -2.8695e+00,  4.4804e-01],
+    #     # ...,
+    #     # [ 4.7553e+01, -8.0698e+01, -1.2198e+00],
+    #     # [ 4.7247e+01, -8.0974e+01,  3.1959e-02],
+    #     # [ 4.8014e+01, -8.7090e+01,  5.4919e-01]])
+    #     print(batch.camera[0]) #PerspectiveCameras()
+    #     print(batch.image_rgb[0].shape) #torch.Size([3, 224, 224])
+    #     plot_annotation(batch.image_rgb[0].permute(1, 2, 0).cpu().numpy(),batch.sequence_point_cloud[0].points_packed().cpu().numpy(),output_fname="/home/palakons/projection-conditioned-point-cloud-diffusion/experiments/outputs/output.png")
+    #     exit()
     
-    exit()
+    # exit()
     # Compute total training batch size
     total_batch_size = cfg.dataloader.batch_size * accelerator.num_processes * accelerator.gradient_accumulation_steps
 
@@ -246,6 +245,12 @@ def main(cfg: ProjectConfig):
                 #     print()
                 #     print("lens")
                 #     print(len(batch.sequence_point_cloud),len(batch.camera),len(batch.image_rgb),len(batch.fg_probability))
+
+                # check if the coordinate is normalized, print max,min,mean
+                for axis_no in range(3):
+                    print("max",torch.max(batch.sequence_point_cloud[0].points_packed()[:,axis_no]),"min",torch.min(batch.sequence_point_cloud[0].points_packed()[:,axis_no]),"mean",torch.mean(batch.sequence_point_cloud[0].points_packed()[:,axis_no]))
+                    
+                exit()
 
                 # Forward
                 loss = model(batch, mode='train')
@@ -533,4 +538,5 @@ def sample(
 
 
 if __name__ == '__main__':
+    print("main")
     main()

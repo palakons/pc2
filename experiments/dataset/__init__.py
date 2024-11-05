@@ -63,7 +63,7 @@ def get_dataset(cfg: ProjectConfig):
         print("61 Loading datasets...")
         datasets = dataset_map_provider.get_dataset_map()
 
-        # print(datasets["train"])
+        # print("dataset-train",datasets["train"])
         # JsonIndexDataset(
         #     path_manager=None,
         #     frame_annotations_file='/data/palakons/dataset/co3d/car/frame_annotations.jgz',
@@ -169,6 +169,9 @@ def get_dataset(cfg: ProjectConfig):
         # Get datasets
         print("61 Loading datasets...")
         datasets = dataset_map_provider.get_dataset_map()
+
+        # print("dataset-train",datasets["train"])
+        # print(  "first data sample in dataset-train",datasets["train"][0])
 
 
         # Get dataloader mapper

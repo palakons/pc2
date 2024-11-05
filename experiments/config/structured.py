@@ -8,7 +8,8 @@ from hydra.conf import RunDir
 
 @dataclass
 class CustomHydraRunDir(RunDir):
-    dir: str = './outputs/${run.name}/${now:%Y-%m-%d--%H-%M-%S}'
+    # dir: str = './outputs/${run.name}/${now:%Y-%m-%d--%H-%M-%S}'
+    dir: str = '/home2/palakons/singularity/outputs/${run.name}/${now:%Y-%m-%d--%H-%M-%S}'
 
 
 @dataclass
